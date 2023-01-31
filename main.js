@@ -22,9 +22,9 @@ const BG = {
     height: canvas.height
 }
 function handleBackground(){
-    if(BG.x1 <= -BG.width) BG.x1 = BG.width;
+    if(BG.x1 <= -BG.width + gameSpeed) BG.x1 = BG.width;
     else BG.x1 -= gameSpeed;
-    if(BG.x2 <= -BG.width) BG.x2 = BG.width;
+    if(BG.x2 <= -BG.width + gameSpeed) BG.x2 = BG.width;
     else BG.x2 -= gameSpeed;
     ctx.drawImage(background, BG.x1, BG.y, BG.width, BG.height);
     ctx.drawImage(background, BG.x2, BG.y, BG.width, BG.height);
@@ -39,7 +39,7 @@ function animate(){
     handleParticles();
     bird.update();
     bird.draw();
-    ctx.fillStyle = 'green';
+    ctx.fillStyle = '#fff';
     ctx.font = '90px Georgia';
     ctx.strokeText(score, 450, 70);
     ctx.fillText(score, 450, 70);
@@ -59,6 +59,7 @@ window.addEventListener('keydown', function(e){
 
 window.addEventListener('keyup', function(e){
     if(e.code === 'Space') spacePressed = false;
+    bird.frameX = 0;
 });
 
 const bang = new Image();
@@ -69,6 +70,7 @@ function handleCollisions(){
             // collision detected
             ctx.drawImage(bang, bird.x, bird.y, 50, 50);
             ctx.font = "25px Georgia";
+            ctx.fillStyle = "#fff";
             ctx.fillText("Game Over, Your Score is " + score, 160, canvas.height/2 - 10);
 
             return true;
